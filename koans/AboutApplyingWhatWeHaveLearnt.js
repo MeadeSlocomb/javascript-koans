@@ -39,16 +39,19 @@ describe("About Applying What We Have Learnt", function() {
 
       var productsICanEat = [];
 
-      var answer = products.filter(function(stuff){
-        if (stuff.containsNuts == false && !_.any(stuff.ingredients, 'mushrooms')) {
-          productsICanEat.push(stuff);
-        };
-      });
+      var answer = products.filter(function(product){
+        if (product.containsNuts == false && !_.any(product.ingredients, function(ingredient){
+          return ingredient == 'mushrooms'}))
+        {
+          productsICanEat.push(product);
+        }
 
-      console.log(productsICanEat);
+      })
 
-      expect(productsICanEat.length).toBe(answer.length);
+        return productsICanEat.length;
 
+
+      expect(productsICanEat.length).toBe(answer);
   });
 
   /*********************************************************************************/
@@ -97,24 +100,24 @@ describe("About Applying What We Have Learnt", function() {
   });
 
   it("should count the ingredient occurrence (functional)", function () {
-    var ingredientCount = { "{ingredient name}": 0 };
 
-    // var result = function(){
-    //   return _([products.ingredients]).chain()
-    //     .map(function(){return products.ingredients == 'mushrooms'})
-    //     flatten()
-    //     .reduce(function() {ingredientCount.ingredient name: ++};
-    //     });
-    // };
+      var ingredientCount = { "{ingredient name}": 0 };
 
-    console.log(result);
+      ingredientCount = function(){_.chain(products)
+        .map(function(product) {
+          return product.ingredients;
+        })
+        .flatten()
+        .reduce(function(iCount, ingred) {
+          iCount[ingred] = (iCount[ingred] || 0) + 1;
+          return iCount;
+        }, {})
+        .value();
+
+        expect(ingredientCount['mushrooms']).toBe(ingredientCount());
+      }});
 
     /* chain() together map(), flatten() and reduce() */
-
-
-
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
-  });
 
   /*********************************************************************************/
   /* UNCOMMENT FOR EXTRA CREDIT */
